@@ -8,18 +8,14 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 TEMPLATES_DIR="$SCRIPT_DIR/templates"
-# ==========================================================
 # Deployment interruption handler
-# ==========================================================
 
 deployment_interrupted() {
 
     signal="$1"
 
     echo
-    echo "========================================"
     echo "Deployment interrupted by $signal"
-    echo "========================================"
 
     if [ -n "$project_dir" ] && [ -d "$project_dir" ]
     then
@@ -42,10 +38,7 @@ deployment_interrupted() {
     trap - INT TSTP
     exit 1
 }
-
-# ==========================================================
 # Pre-flight checks
-# ==========================================================
 
 check_requirements() {
     echo
@@ -68,11 +61,7 @@ check_requirements() {
 
     return 0
 }
-
-
-# ==========================================================
 #  template files
-# ==========================================================
 
 check_templates() {
     echo
@@ -102,9 +91,7 @@ check_templates() {
 
     return 0
 }
-# ==========================================================
 #  attendance alert thresholds
-# ==========================================================
 
 update_thresholds() {
 
@@ -154,17 +141,13 @@ update_thresholds() {
         echo "Keeping the default thresholds."
     fi
 }
-
-# ==========================================================
 # Deploy application
-# ==========================================================
 
 deploy_application() {
 
     echo
-    echo "========================================"
     echo "       DEPLOY APPLICATION"
-    echo "========================================"
+    
 
     
     check_requirements || return 1
@@ -189,7 +172,6 @@ deploy_application() {
 
 trap 'deployment_interrupted "SIGINT"' INT
 trap 'deployment_interrupted "SIGTSTP"' TSTP
-    # ------------------------------------------------------
     # Handle existing project
     # ------------------------------------------------------
 
@@ -210,9 +192,6 @@ trap 'deployment_interrupted "SIGTSTP"' TSTP
 
         echo "Existing project removed."
     fi
-
-
-    # ------------------------------------------------------
     #  directory structure
     # ------------------------------------------------------
 
@@ -226,10 +205,7 @@ trap 'deployment_interrupted "SIGTSTP"' TSTP
 
     echo "Directories created."
 
-
-    # ------------------------------------------------------
     # Copy application files
-    # ------------------------------------------------------
 
     echo
     echo "Copying application files..."
@@ -253,10 +229,7 @@ cp "$TEMPLATES_DIR/attendance_checker.py" "$project_dir/Helpers/attendance_check
 
     echo "attendance_checker.py copied."
     echo "config.json copied."
-
-# ------------------------------------------------------
 #  the student roster
-# ------------------------------------------------------
 
 echo
 echo "How would you like to build the student roster?"
@@ -387,11 +360,7 @@ emails=(
         ;;
 
 esac
-
-
-    # ------------------------------------------------------
     #  permissions
-    # ------------------------------------------------------
 
     echo
     echo "Setting permissions..."
@@ -402,19 +371,14 @@ esac
     echo "attendance_checker.py: executable"
     echo "Helpers/config.json: owner read/write only"
 update_thresholds
-
-    # ------------------------------------------------------
     #  deployed structure
-    # ------------------------------------------------------
 
     echo
     echo "Deployment structure:"
     find "$project_dir" -maxdepth 3 -print
 
     echo
-    echo "========================================"
     echo "Deployment completed successfully."
-    echo "========================================"
 
 
 trap - INT TSTP
@@ -435,9 +399,8 @@ echo "Attendance Tracker finished."
 
 return "$status"
 }
-# ==========================================================
+
 # Run application
-# ==========================================================
 
 run_application() {
 
@@ -472,11 +435,7 @@ run_application() {
 
     python3 Helpers/attendance_checker.py
 }
-
-
-# ==========================================================
 # Archive logs
-# ==========================================================
 
 archive_logs() {
 
@@ -529,18 +488,12 @@ archive_logs() {
         echo "No absent.log found. Nothing to archive."
     fi
 }
-
-
-# ==========================================================
 # Main menu
-# ==========================================================
 
 while true
 do
     echo
-    echo "========================================"
     echo "   STUDENT ATTENDANCE TRACKER AGENT"
-    echo "========================================"
     echo
     echo "1. Deploy application"
     echo "2. Run application"
