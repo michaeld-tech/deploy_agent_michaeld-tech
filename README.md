@@ -1,3 +1,11 @@
+## Project Demonstration Video
+
+This video demonstrates how I built and tested the Automated Project
+Bootstrapping and Process Management script.
+https://drive.google.com/file/d/1Fg3e0buaN7U32nLZWb3m9iQ3ejS3QHq3/view?usp=sharing
+
+
+
 #AUTOMATED DEPLOYMENT AGENT FOR STUDENT ATTENDANCE TRACKER
 The script deploy_agent.sh is used for deploying the attendance tracker,running it and keeping attendance logs. The projects show scripting, files management,permissions, management and signal handling.
 
